@@ -7,4 +7,4 @@ const callbackExample=(items,callback)=>{
         
 const func=result=>console.log(result);
 callbackExample(list,func);
-//기존에 setTimeout함수는 왜있던거죠??ㅠㅠ
+//기존에 setTimeout함수는 왜있던거죠??
