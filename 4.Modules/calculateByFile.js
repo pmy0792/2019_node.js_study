@@ -18,6 +18,7 @@ const fir =parseFloat((split_input)[0]);
 const oper =(split_input)[1];
 const sec =parseFloat((split_input)[2]);
 
+console.log(fir);
 let result;
 
 if (oper == '+')
