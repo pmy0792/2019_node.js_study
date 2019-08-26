@@ -2,6 +2,7 @@ const express=require('express');
 const app=express();
 const bodyParser=require('body-parser');
 const session=require('express-session');
+const fs=require('fs');
 
 const users = [];
 app.use(express.static(__dirname+'/'));
@@ -13,7 +14,11 @@ app.use(session({
 }));
 
 app.get('/',(req,res)=>{
-    res.redirect('/signup.html')
+    fs.readFile('./signup.html',(err,data)=>{
+        if(err) throw err;
+        res.writeHead(200,{'Content-Type':'text/html'});
+        res.end(data);
+    });
 });
 
 app.post('/signup',(req,res)=>{
@@ -54,19 +59,31 @@ app.post('/login',(req,res)=>{
     const idx_pw=users.findIndex((item,idx)=>{
         return item.PW ===password});
         
-        if (idx_id<0){
+        if (idx_id==-1){
             res.send('Id Wrong');    
         }
         if((idx_id>-1)&&idx_pw==-1){
             res.send('Password Wrong')
         }
-        else{
+        if ((idx_id>-1)&&(idx_pw>-1)){
             req.session.userId=userId;
             res.redirect('/profile')};
 })
     
 app.get('/profile',(req,res)=>{
-    console.log('zz');
+    if(!req.session.userId){
+        res.send('no session');
+    }
+    else{
+        const ID =req.session.userId;
+        const user_info=users.find((info)=>info.Id===ID);
+        delete user_info.PW;
+
+        res.send(user_info);
+        console.log(user_info);
+    }
+
+    
 })
 
 app.listen(3000,()=>{
