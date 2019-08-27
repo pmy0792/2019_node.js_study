@@ -76,8 +76,6 @@ app.get('/profile',(req,res)=>{
         res.send(user_info);
         console.log(user_info);
     }
-
-    
 })
 
 app.listen(3000,()=>{
