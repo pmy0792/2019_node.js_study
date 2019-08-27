@@ -3,7 +3,6 @@ const add=calc.add;
 const subtract=calc.subtract;
 const multiply=calc.multiply;
 const divide=calc.divide;
-
 const fs=require('fs');
 let input="";
 fs.readFile('input.txt',(err,data)=>{
