@@ -30,17 +30,8 @@ app.post('/signup',(req,res)=>{
     const phonenumber=req.body.phonenumber;
     const idx_id=users.findIndex((item,idx)=>{
         return item.Id ===userId});
-    const idx_name=users.findIndex((item,idx)=>{
-        return item.name ===name});
-    const idx_department=users.findIndex((item,idx)=>{
-        return item.department===department});
-    const idx_email=users.findIndex((item,idx)=>{
-        return item.emailaddress=emailaddress});
-    const idx_phone=users.findIndex((item,idx)=>{
-        return item.phonenumber===phonenumber});
 
-        if ((idx_id>-1)||(idx_department>-1)||(idx_email)>-1
-        ||(idx_name>-1)||(idx_phone>-1)){
+        if (idx_id>-1){
             res.send('User already exists');    
         }
         else {users.push({Id:userId,PW:password,NAME:name,
@@ -58,16 +49,19 @@ app.post('/login',(req,res)=>{
         return item.Id ===userId});
     const idx_pw=users.findIndex((item,idx)=>{
         return item.PW ===password});
-        
+    const find_info=users.find((item)=>item.Id===userId);
+    
+
         if (idx_id==-1){
             res.send('Id Wrong');    
         }
-        if((idx_id>-1)&&idx_pw==-1){
+        if((idx_id>-1)&&(find_info.PW!==password)){
             res.send('Password Wrong')
         }
-        if ((idx_id>-1)&&(idx_pw>-1)){
+        if ((idx_id>-1)&&(find_info.PW===password)){
             req.session.userId=userId;
-            res.redirect('/profile')};
+            res.redirect('/profile')
+        };
 })
     
 app.get('/profile',(req,res)=>{

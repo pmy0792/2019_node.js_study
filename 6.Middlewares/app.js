@@ -36,14 +36,14 @@ app.post('/login',(req,res)=>{
         return item.Id ===userId});
     const idx_pw=users.findIndex((item,idx)=>{
         return item.PW ===password});
-        
+    const find_info=users.find((item)=>item.Id===userId);    
         if (idx_id<0){
             res.send('Id Wrong');    
         }
-        if((idx_id>-1)&&idx_pw==-1){
+        if((idx_id>-1)&&(find_info.PW!==password)){
             res.send('Password Wrong')
         }
-        if (((idx_id>-1)&&(idx_pw>-1))){
+        if ((idx_id>-1)&&(find_info.PW===password)){
             res.send("Welcome "+userId+"!")};
 })
     
